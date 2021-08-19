@@ -7,7 +7,9 @@ export const reparentDirectoryFiles = (
 ) => {
   for (const [fileKey, file] of Object.entries(files)) {
     if (!fileKey.startsWith(oldKey)) continue;
+
     delete files[fileKey];
-    files[fileKey.replace(oldKey, `${newKey}/${pathDifference.join('/')}`)] = file;
+    file.rootDirectory = newKey;
+    files[`${newKey}/${pathDifference.join('/')}${fileKey.substr(oldKey.length)}`] = file;
   }
 };
